@@ -36,3 +36,4 @@ sh mvnw jetty:run
 mvnw.cmd jetty:run 
 для Windows
 
+Приложение стартует на localhost:8080
