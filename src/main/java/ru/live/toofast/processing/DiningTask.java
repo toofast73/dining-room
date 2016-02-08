@@ -1,9 +1,7 @@
 package ru.live.toofast.processing;
 
 
-import com.google.common.collect.Maps;
 import org.apache.log4j.LogManager;
-
 import org.apache.log4j.Logger;
 import org.springframework.retry.RetryCallback;
 import org.springframework.retry.RetryPolicy;
@@ -14,9 +12,10 @@ import ru.live.toofast.entity.Meal;
 import ru.live.toofast.entity.Order;
 import ru.live.toofast.entity.dinnerware.Dinnerware;
 import ru.live.toofast.entity.dinnerware.DinnerwareType;
-import ru.live.toofast.service.DiningRoomService;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 
@@ -31,12 +30,11 @@ import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
 public class DiningTask implements Supplier<Order> {
 
-    Logger logger = LogManager.getLogger(DiningTask.class);
-
     private final Order order;
     private final Map<DinnerwareType, Queue<Dinnerware>> requisite;
     private final Map<DinnerwareType, Integer> initialRequisiteCount;
     private final Map<DinnerwareType, Dinnerware> usedDinnerware = newConcurrentMap();
+    Logger logger = LogManager.getLogger(DiningTask.class);
 
 
     public DiningTask(Order order, Map<DinnerwareType, Queue<Dinnerware>> requisite, Map<DinnerwareType, Integer> initialRequisiteCount) {

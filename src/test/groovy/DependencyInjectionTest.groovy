@@ -63,9 +63,9 @@ class DependencyInjectionTest {
 
         assertTrue(MapUtils.isNotEmpty(req))
         assertEquals(10, req.get(SPOON).size())
-        assertEquals(Spoon, req.get(SPOON).first().getClass())
+        assertEquals(Spoon, req.get(SPOON).poll().getClass())
 
         assertEquals(20, req.get(TRAY).size())
-        assertEquals(Tray, req.get(TRAY).first().getClass())
+        assertEquals(Tray, req.get(TRAY).poll().getClass())
     }
 }

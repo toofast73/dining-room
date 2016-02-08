@@ -38,7 +38,7 @@ class RetryTest {
 
 
 
-        DiningTask task = new DiningTask(order, requisite, null, null);
+        DiningTask task = new DiningTask(order, requisite, null);
 
 
         Runnable r1 = new Runnable() {

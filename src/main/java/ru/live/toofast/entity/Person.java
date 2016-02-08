@@ -1,7 +1,5 @@
 package ru.live.toofast.entity;
 
-import java.util.Random;
-
 /**
  * Created by toofast on 06/02/16.
  */

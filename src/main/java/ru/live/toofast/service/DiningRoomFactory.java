@@ -1,27 +1,18 @@
 package ru.live.toofast.service;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Queues;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import ru.live.toofast.entity.Person;
 import ru.live.toofast.entity.dinnerware.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.newLinkedList;
-import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Queues.newConcurrentLinkedQueue;
-import static com.google.common.collect.Sets.newHashSet;
 
 /**
  * Created by toofast on 07/02/16.

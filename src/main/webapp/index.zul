@@ -1,11 +1,41 @@
-<?link rel="stylesheet" type="text/css" href="/style.css"?>
 <zk>
-<window border="normal" title="Get ZK Up and Running">
-	<vlayout>
-		<a href="hello.zul">hello.zul</a>
-		<a href="search.zul">search.zul</a>
-		<a href="searchMvc.zul">searchMvc.zul</a>
-		<a href="searchMvvm.zul">searchMvvm.zul</a>
-	</vlayout>
-</window>
+	<window title="Dining room simulator" border="normal" apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('ru.live.toofast.ViewModel')">
+		<borderlayout height="800px">
+			<north>
+				<div style="background:blue"></div>
+			</north>
+			<south>
+				<div style="background:blue"></div>
+			</south>
+			<center>
+				<div>
+					<vbox>
+						<listbox height="160px" model="@bind(vm.status) @converter(vm.converter)">
+							<listhead>
+								<listheader label="Status" />
+								<listheader label="Quantity" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="@bind(each.status)"></listcell>
+									<listcell label="@bind(each.quantity)"></listcell>
+								</listitem>
+							</template>
+						</listbox>
+					</vbox>
+
+				</div>
+			</center>
+			<west>
+				<div width="200px">
+					<vbox align="center">
+						<button id="happy" label="Test Happy Case" onClick="@command('invokeHappyCase')" autodisable="happy, difficult" />
+						<button id="difficult" label="Test Difficult Case" onClick="@command('invokeCaseWithDifficulties')" autodisable="happy, difficult" />
+					</vbox>
+
+				</div>
+			</west>
+		</borderlayout>
+	</window>
 </zk>

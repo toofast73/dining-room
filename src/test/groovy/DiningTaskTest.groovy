@@ -19,7 +19,7 @@ class DiningTaskTest extends Specification {
 
         Map<DinnerwareType, Integer> initialRequisiteCount = [:]
         initialRequisiteCount.put(DinnerwareType.FORK, 0)
-        DiningTask task = new DiningTask(stub, null, initialRequisiteCount, null);
+        DiningTask task = new DiningTask(stub, null, initialRequisiteCount);
 
         when:
         task.checkPrerequisites()
@@ -39,7 +39,7 @@ class DiningTaskTest extends Specification {
 
         Map<DinnerwareType, Integer> initialRequisiteCount = [:]
         initialRequisiteCount.put(DinnerwareType.FORK, 10)
-        DiningTask task = new DiningTask(stub, null, initialRequisiteCount, null);
+        DiningTask task = new DiningTask(stub, null, initialRequisiteCount);
 
         expect:
         task.checkPrerequisites()

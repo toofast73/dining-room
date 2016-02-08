@@ -2,13 +2,16 @@ package ru.live.toofast.service;
 
 
 import ru.live.toofast.entity.Order;
+import ru.live.toofast.entity.Person;
 import ru.live.toofast.entity.dinnerware.Dinnerware;
 import ru.live.toofast.entity.dinnerware.DinnerwareType;
-import ru.live.toofast.entity.Person;
 import ru.live.toofast.processing.DiningTask;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -27,6 +30,28 @@ public class DiningRoom {
 
     private DiningRoomService service;
 
+
+    public List<CompletableFuture<Order>> startSimulation() {
+
+        Collection<Order> orders = createOrders(customers);
+
+        return orders.parallelStream().map(order ->
+                CompletableFuture.supplyAsync(new DiningTask(order, requisite, initialRequisiteCount)))
+                .collect(Collectors.toList());
+
+    }
+
+    private Collection<Order> createOrders(Collection<Person> customers) {
+        Collection<Order> orders = newArrayList();
+        for (Person customer : customers) {
+            Order order = new Order();
+            order.setCustomer(customer);
+            order.setDish(service.selectDish(customer));
+            order.setStatus(NOT_PROCESSED);
+            orders.add(order);
+        }
+        return orders;
+    }
 
     public List<Person> getCustomers() {
         return customers;
@@ -57,28 +82,5 @@ public class DiningRoom {
 
     public void setService(DiningRoomService service) {
         this.service = service;
-    }
-
-    public List<CompletableFuture<Order>> process() {
-
-        Collection<Order> orders = createOrders(customers);
-
-
-        return orders.parallelStream().map(order ->
-                CompletableFuture.supplyAsync(new DiningTask(order, requisite, initialRequisiteCount)))
-                .collect(Collectors.toList());
-
-    }
-
-    private Collection<Order> createOrders(Collection<Person> customers) {
-        Collection<Order> orders = newArrayList();
-        for (Person customer : customers) {
-            Order order = new Order();
-            order.setCustomer(customer);
-            order.setDish(service.selectDish(customer));
-            order.setStatus(NOT_PROCESSED);
-            orders.add(order);
-        }
-        return orders;
     }
 }

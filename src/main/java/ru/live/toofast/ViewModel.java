@@ -33,20 +33,23 @@ import static ru.live.toofast.entity.Status.*;
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class ViewModel {
 
-    private Map<Status, AtomicInteger> status;
-    private int numberOfCustomers;
-    private Map<DinnerwareType, Integer> initialRequisite;
-    private String keyword = "FOO";
-    private org.zkoss.bind.Converter converter = new Converter();
-
     @WireVariable("diningRoomFactory")
     DiningRoomFactory factory;
 
+    private Map<Status, AtomicInteger> status;
+
+    private int numberOfCustomers;
+
+    private Map<DinnerwareType, Integer> initialRequisite;
+
+    private String keyword = "FOO";
+
+    private org.zkoss.bind.Converter converter = new StatusMapConverter();
 
     public void runCommand() {
 
         DiningRoom room = factory.createDiningRoom(numberOfCustomers, initialRequisite);
-        List<CompletableFuture<Order>> futures = room.process();
+        List<CompletableFuture<Order>> futures = room.startSimulation();
 
 
         futures.parallelStream().forEach(f -> f.whenComplete(new DiningTaskCallback(this, Executions.getCurrent())));
@@ -54,7 +57,7 @@ public class ViewModel {
 
     @Command
     @NotifyChange({"initialRequisite", "numberOfCustomers", "status"})
-    public void invokeHappyCase(){
+    public void invokeHappyCase() {
         Executions.getCurrent().getDesktop().enableServerPush(true);
         Map<DinnerwareType, Integer> req = newHashMap();
         req.put(DinnerwareType.FORK, 50);
@@ -72,7 +75,7 @@ public class ViewModel {
     }
 
     @Command
-    public void invokeCaseWithDifficulties(){
+    public void invokeCaseWithDifficulties() {
         Executions.getCurrent().getDesktop().enableServerPush(true);
         Map<DinnerwareType, Integer> req = newHashMap();
         req.put(DinnerwareType.FORK, 50);
@@ -91,10 +94,11 @@ public class ViewModel {
     }
 
 
+
     private class DiningTaskCallback implements BiConsumer<Order, Throwable> {
-        Logger logger = org.apache.log4j.LogManager.getLogger(DiningTaskCallback.class);
         private final ViewModel viewModel;
         private final Execution execution;
+        Logger logger = org.apache.log4j.LogManager.getLogger(DiningTaskCallback.class);
 
         public DiningTaskCallback(ViewModel viewModel, Execution current) {
             this.viewModel = viewModel;
@@ -103,6 +107,12 @@ public class ViewModel {
 
         @Override
         public void accept(Order order, Throwable throwable) {
+            updateStatus(order, throwable);
+            notifyFrontend();
+            whenAllTasksCompleted();
+        }
+
+        private void updateStatus(Order order, Throwable throwable) {
             if (isNull(throwable)) {
                 order.setStatus(SUCCESS);
                 status.get(NOT_PROCESSED).decrementAndGet();
@@ -111,7 +121,10 @@ public class ViewModel {
                 status.get(NOT_PROCESSED).decrementAndGet();
                 status.get(FAILURE).incrementAndGet();
             }
-            if(status.get(NOT_PROCESSED).get() == 0 || status.get(SUCCESS).get() % 100 == 0) {
+        }
+
+        private void notifyFrontend() {
+            if (status.get(NOT_PROCESSED).get() == 0 || status.get(SUCCESS).get() % 100 == 0) {
                 try {
                     Executions.activate(execution.getDesktop());
                     BindUtils.postNotifyChange(null, null, viewModel, "status");
@@ -121,17 +134,19 @@ public class ViewModel {
                     Executions.deactivate(execution.getDesktop());
                 }
             }
-            if(status.get(NOT_PROCESSED).get() == 0){
-                if(status.get(FAILURE).get() > 0){
+        }
+
+        private void whenAllTasksCompleted() {
+            if (status.get(NOT_PROCESSED).get() == 0) {
+                if (status.get(FAILURE).get() > 0) {
                     Clients.alert("Some orders were processed with errors. There were not enough initial tableware to serve the meal.");
                 }
                 execution.getDesktop().enableServerPush(false);
             }
-
-
         }
 
     }
+
 
     public String getKeyword() {
         return keyword;
@@ -140,7 +155,6 @@ public class ViewModel {
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
-
 
     public Map<Status, AtomicInteger> getStatus() {
         return status;

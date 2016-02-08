@@ -37,7 +37,7 @@ class DiningRoomFactoryTest extends Specification {
         then:
         isNotEmpty(dinnerware)
         dinnerware.size() == 10
-        dinnerware.first().getClass() == Fork
+        dinnerware.poll().getClass() == Fork
 
     }
 
@@ -68,7 +68,7 @@ class DiningRoomFactoryTest extends Specification {
         MapUtils.isNotEmpty(requisite)
         requisite.get(FORK).size()  == 10
         requisite.get(KNIFE).size() == 20
-        requisite.get(KNIFE).first().getClass() == Knife
+        requisite.get(KNIFE).poll().getClass() == Knife
     }
 
 

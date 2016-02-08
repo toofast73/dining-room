@@ -12,7 +12,7 @@ import java.util.Random;
 @Service
 public class DiningRoomService {
 
-    public Meal selectDish(Person person){
+    public Meal selectDish(Person person) {
 
         Random rnd = new Random();
         int randomDishIndex = rnd.nextInt(Meal.values().length);
@@ -20,7 +20,6 @@ public class DiningRoomService {
         return Meal.values()[randomDishIndex];
 
     }
-
 
 
 }
