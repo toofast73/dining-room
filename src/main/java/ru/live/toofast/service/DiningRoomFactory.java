@@ -1,6 +1,7 @@
 package ru.live.toofast.service;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Queues;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
 import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Queues.newConcurrentLinkedQueue;
 import static com.google.common.collect.Sets.newHashSet;
 
 /**
  * Created by toofast on 07/02/16.
  */
-@Component
+@Component("diningRoomFactory")
 public class DiningRoomFactory {
 
 
@@ -49,7 +52,7 @@ public class DiningRoomFactory {
     }
 
     private Map<DinnerwareType, Queue<Dinnerware>> generateRequisite(Map<DinnerwareType, Integer> initialRequisite) {
-        Map<DinnerwareType, Queue<Dinnerware>> result = newHashMap();
+        Map<DinnerwareType, Queue<Dinnerware>> result = new ConcurrentHashMap<>();//newHashMap();
 
         for (Map.Entry<DinnerwareType, Integer> e : initialRequisite.entrySet()) {
 
@@ -67,7 +70,7 @@ public class DiningRoomFactory {
     }
 
     private Queue<Dinnerware> generateDinnerware(Integer quantity, DinnerwareType type) {
-        Queue<Dinnerware> dw = newLinkedList();
+        Queue<Dinnerware> dw = newConcurrentLinkedQueue();
 
         switch (type) {
             case FORK:

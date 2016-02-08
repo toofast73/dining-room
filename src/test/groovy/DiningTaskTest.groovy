@@ -10,7 +10,7 @@ import spock.lang.Specification
  */
 class DiningTaskTest extends Specification {
 
-    def "Check prerequisites: failed"(){
+    def  "Check prerequisites: failed"(){
 
         setup:
 

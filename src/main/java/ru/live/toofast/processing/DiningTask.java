@@ -1,6 +1,10 @@
 package ru.live.toofast.processing;
 
 
+import com.google.common.collect.Maps;
+import org.apache.log4j.LogManager;
+
+import org.apache.log4j.Logger;
 import org.springframework.retry.RetryCallback;
 import org.springframework.retry.RetryPolicy;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
@@ -16,6 +20,7 @@ import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 
+import static com.google.common.collect.Maps.newConcurrentMap;
 import static com.google.common.collect.Maps.newHashMap;
 import static java.util.Objects.isNull;
 import static org.apache.commons.collections4.CollectionUtils.isEmpty;
@@ -26,10 +31,12 @@ import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 
 public class DiningTask implements Supplier<Order> {
 
+    Logger logger = LogManager.getLogger(DiningTask.class);
+
     private final Order order;
     private final Map<DinnerwareType, Queue<Dinnerware>> requisite;
     private final Map<DinnerwareType, Integer> initialRequisiteCount;
-    private final Map<DinnerwareType, Dinnerware> usedDinnerware = newHashMap();
+    private final Map<DinnerwareType, Dinnerware> usedDinnerware = newConcurrentMap();
 
 
     public DiningTask(Order order, Map<DinnerwareType, Queue<Dinnerware>> requisite, Map<DinnerwareType, Integer> initialRequisiteCount) {
@@ -65,9 +72,9 @@ public class DiningTask implements Supplier<Order> {
     private void takeFood() {
         try {
 
-            Thread.sleep(100);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
-            //TODO logger
+            logger.warn(e);
         }
     }
 
