@@ -13,6 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by toofast on 08/02/16.
+ *
+ * Converter for ViewModel.status
+ * @see ViewModel
  */
 public class StatusMapConverter implements org.zkoss.bind.Converter<List<StatusMapConverter.StatusTO>, Map<Status, AtomicInteger>, Component> {
 

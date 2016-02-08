@@ -15,7 +15,11 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Queues.newConcurrentLinkedQueue;
 
 /**
+ *
  * Created by toofast on 07/02/16.
+ * The factory for DiningRoom class.
+ *
+ * @see DiningRoom
  */
 @Component("diningRoomFactory")
 public class DiningRoomFactory {

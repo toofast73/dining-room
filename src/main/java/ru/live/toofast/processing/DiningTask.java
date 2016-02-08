@@ -125,7 +125,7 @@ public class DiningTask implements Supplier<Order> {
         for (DinnerwareType dinnerwareType : req) {
             Integer quantity = initialRequisiteCount.get(dinnerwareType);
             if (isNull(quantity) || quantity < 1) {
-                throw new RuntimeException(String.format("There is not enought requisite of type: %s", dinnerwareType)); //TODO SPECIAL
+                throw new RuntimeException(String.format("There is not enought requisite of type: %s", dinnerwareType));
             }
         }
     }

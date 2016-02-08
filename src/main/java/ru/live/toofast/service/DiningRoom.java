@@ -19,6 +19,9 @@ import static ru.live.toofast.entity.Status.NOT_PROCESSED;
 
 /**
  * Created by toofast on 06/02/16.
+ *
+ * The stateful service. Emulates the room, where people take food.
+ *
  */
 public class DiningRoom {
 

@@ -28,6 +28,9 @@ import static ru.live.toofast.entity.Status.*;
 
 /**
  * Created by toofast on 07/02/16.
+ *
+ * The class for communication with the frontend.
+ * Front end is rendered, when operation status is updated.
  */
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
@@ -123,6 +126,11 @@ public class ViewModel {
             }
         }
 
+        /**
+         * We don't need to send notifications very often. One for #n customers is enough.
+         *
+         * TODO: substitute hardcoded variables with properties
+         */
         private void notifyFrontend() {
             if (status.get(NOT_PROCESSED).get() == 0 || status.get(SUCCESS).get() % 100 == 0) {
                 try {
