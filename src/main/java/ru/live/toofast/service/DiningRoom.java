@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static java.util.stream.Collectors.toList;
 import static ru.live.toofast.entity.Status.NOT_PROCESSED;
 
 /**
@@ -40,7 +41,7 @@ public class DiningRoom {
 
         return orders.parallelStream().map(order ->
                 CompletableFuture.supplyAsync(new DiningTask(order, requisite, initialRequisiteCount)))
-                .collect(Collectors.toList());
+                .collect(toList());
 
     }
 
