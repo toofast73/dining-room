@@ -31,8 +31,9 @@ Deadlocks избегаются следующим образом:
 - Добавить javadoc для основных классов
 
 Чтобы запустить проект, необходимо скачать исходный код, перейти в папку проекта и исполнить команду
-{code}
+
 sh mvnw jetty:run
-#mvnw.cmd jetty:run 
-#for windows
-{code}
+
+mvnw.cmd jetty:run 
+for windows
+
