@@ -1,4 +1,5 @@
 import com.sun.org.apache.xpath.internal.operations.Or
+import org.zkoss.zk.ui.Desktop
 import org.zkoss.zk.ui.Execution
 import ru.live.toofast.ViewModel
 import ru.live.toofast.entity.Order
@@ -64,6 +65,31 @@ class DiningTaskCallbackTest extends Specification {
         viewModel.status.get(SUCCESS).get() == 1
         viewModel.status.get(FAILURE).get() == 1
         viewModel.status.get(NOT_PROCESSED).get() == 99
+
+    }
+
+
+    def "Disables server push, when all tasks are finished"(){
+        setup:
+        ViewModel viewModel = new ViewModel()
+        Map<Status, AtomicInteger> statusSample = [:]
+        statusSample.put(NOT_PROCESSED, new AtomicInteger(0))
+        statusSample.put(FAILURE, new AtomicInteger(0))
+        viewModel.setStatus(statusSample)
+
+        Desktop desktopMock = Mock(Desktop)
+        1 * desktopMock.enableServerPush(false)
+
+        Execution execution = Mock(Execution)
+        1 * execution.getDesktop() >> desktopMock
+
+
+        DiningTaskCallback callback = new DiningTaskCallback(viewModel, execution)
+
+        expect:
+        callback.whenAllTasksCompleted()
+
+
 
     }
 }
