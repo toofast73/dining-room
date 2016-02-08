@@ -47,7 +47,8 @@ public class ViewModel {
 
     private String keyword = "FOO";
 
-    private org.zkoss.bind.Converter converter = new StatusMapConverter();
+    @WireVariable("statusMapConverter")
+    private org.zkoss.bind.Converter converter;
 
     public void runCommand() {
 

@@ -17,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Converter for ViewModel.status
  * @see ViewModel
  */
+@org.springframework.stereotype.Component("statusMapConverter")
 public class StatusMapConverter implements org.zkoss.bind.Converter<List<StatusMapConverter.StatusTO>, Map<Status, AtomicInteger>, Component> {
 
     @Override
