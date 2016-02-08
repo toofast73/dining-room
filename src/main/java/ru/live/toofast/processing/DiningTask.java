@@ -33,7 +33,7 @@ public class DiningTask implements Supplier<Order> {
     private final Order order;
     private final Map<DinnerwareType, Queue<Dinnerware>> requisite;
     private final Map<DinnerwareType, Integer> initialRequisiteCount;
-    private final Map<DinnerwareType, Dinnerware> usedDinnerware = newConcurrentMap();
+    private Map<DinnerwareType, Dinnerware> usedDinnerware;
     Logger logger = LogManager.getLogger(DiningTask.class);
 
 
@@ -41,6 +41,7 @@ public class DiningTask implements Supplier<Order> {
         this.order = order;
         this.requisite = requisite;
         this.initialRequisiteCount = initialRequisiteCount;
+        this.usedDinnerware = newConcurrentMap();
     }
 
 
