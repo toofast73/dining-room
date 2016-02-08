@@ -34,5 +34,5 @@ Deadlocks избегаются следующим образом:
 sh mvnw jetty:run
 
 mvnw.cmd jetty:run 
-for windows
+для Windows
 
