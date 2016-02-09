@@ -1,5 +1,6 @@
 package ru.live.toofast;
 
+import org.zkoss.bind.Validator;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
@@ -32,7 +33,6 @@ public class ViewModel {
 
     @WireVariable("diningRoomFactory")
     DiningRoomFactory factory;
-
 
     Integer spoons;
     Integer forks;
@@ -136,6 +136,7 @@ public class ViewModel {
     public void setNumberOfCustomers(Integer numberOfCustomers) {
         this.numberOfCustomers = numberOfCustomers;
     }
+
 }
 
 
