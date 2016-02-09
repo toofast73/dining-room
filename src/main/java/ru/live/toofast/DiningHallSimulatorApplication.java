@@ -18,6 +18,6 @@ public class DiningHallSimulatorApplication {
         SpringApplication.run(DiningHallSimulatorApplication.class, args);
     }
 
-
+ 
 
 }
