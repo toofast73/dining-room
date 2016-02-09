@@ -1,18 +1,12 @@
-import org.apache.commons.collections4.CollectionUtils
-import org.junit.Assert
-import ru.live.toofast.entity.Meal
 import ru.live.toofast.entity.Order
 import ru.live.toofast.entity.Person
-import ru.live.toofast.entity.Status
 import ru.live.toofast.service.DiningRoom
 import ru.live.toofast.service.DiningRoomService
 import spock.lang.Specification
 
-import static org.apache.commons.collections4.CollectionUtils.*
-import static org.junit.Assert.assertNotNull
+import static org.apache.commons.collections4.CollectionUtils.isNotEmpty
 import static ru.live.toofast.entity.Meal.FISH_AND_CHIPS
 import static ru.live.toofast.entity.Status.NOT_PROCESSED
-
 
 /**
  * Created by toofast on 09/02/16.
@@ -20,7 +14,7 @@ import static ru.live.toofast.entity.Status.NOT_PROCESSED
 class DiningRoomTest extends Specification {
 
 
-    def "Creates order entities for customers"(){
+    def "Creates order entities for customers"() {
 
         setup:
         DiningRoom room = new DiningRoom()

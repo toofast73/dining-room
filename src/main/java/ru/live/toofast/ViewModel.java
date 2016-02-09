@@ -22,7 +22,7 @@ import static com.google.common.collect.Maps.newHashMap;
 
 /**
  * Created by toofast on 07/02/16.
- *
+ * <p>
  * The class for communication with the frontend.
  * Front end is rendered, when operation status is updated.
  */
@@ -33,18 +33,21 @@ public class ViewModel {
     @WireVariable("diningRoomFactory")
     DiningRoomFactory factory;
 
+
+    Integer spoons;
+    Integer forks;
+    Integer knifes;
+    Integer numberOfCustomers;
+
+
     private Map<Status, AtomicInteger> status;
-
-    private int numberOfCustomers;
-
-    private Map<DinnerwareType, Integer> initialRequisite;
 
     private String keyword = "FOO";
 
     @WireVariable("statusMapConverter")
     private org.zkoss.bind.Converter converter;
 
-    public void runCommand() {
+    public void runCommand(Integer numberOfCustomers, Map<DinnerwareType, Integer> initialRequisite) {
 
         DiningRoom room = factory.createDiningRoom(numberOfCustomers, initialRequisite);
         List<CompletableFuture<Order>> futures = room.startSimulation();
@@ -53,42 +56,26 @@ public class ViewModel {
         futures.parallelStream().forEach(f -> f.whenComplete(new DiningTaskCallback(this, Executions.getCurrent())));
     }
 
+
     @Command
-    @NotifyChange({"initialRequisite", "numberOfCustomers", "status"})
-    public void invokeHappyCase() {
+    @NotifyChange("status")
+    public void simulate() {
         Executions.getCurrent().getDesktop().enableServerPush(true);
         Map<DinnerwareType, Integer> req = newHashMap();
-        req.put(DinnerwareType.FORK, 50);
-        req.put(DinnerwareType.SPOON, 70);
-        req.put(DinnerwareType.KNIFE, 100);
-        req.put(DinnerwareType.TRAY, 80);
-        setInitialRequisite(req);
-        setNumberOfCustomers(1000);
-        Map<Status, AtomicInteger> status = newConcurrentMap();
-        status.put(Status.SUCCESS, new AtomicInteger(0));
-        status.put(Status.FAILURE, new AtomicInteger(0));
-        status.put(Status.NOT_PROCESSED, new AtomicInteger(1000));
-        setStatus(status);
-        runCommand();
+        req.put(DinnerwareType.FORK, forks);
+        req.put(DinnerwareType.SPOON, spoons);
+        req.put(DinnerwareType.KNIFE, knifes);
+        Integer numberOfCustomers = getNumberOfCustomers();
+        prepareProcessingStatus(numberOfCustomers);
+        runCommand(numberOfCustomers, req);
     }
 
-    @Command
-    public void invokeCaseWithDifficulties() {
-        Executions.getCurrent().getDesktop().enableServerPush(true);
-        Map<DinnerwareType, Integer> req = newHashMap();
-        req.put(DinnerwareType.FORK, 50);
-        req.put(DinnerwareType.SPOON, 0);
-        req.put(DinnerwareType.KNIFE, 100);
-        req.put(DinnerwareType.TRAY, 80);
-        setInitialRequisite(req);
-        setNumberOfCustomers(1000);
+    private void prepareProcessingStatus(Integer numberOfCustomers) {
         Map<Status, AtomicInteger> status = newConcurrentMap();
         status.put(Status.SUCCESS, new AtomicInteger(0));
         status.put(Status.FAILURE, new AtomicInteger(0));
-        status.put(Status.NOT_PROCESSED, new AtomicInteger(1000));
+        status.put(Status.NOT_PROCESSED, new AtomicInteger(numberOfCustomers));
         setStatus(status);
-        runCommand();
-
     }
 
 
@@ -108,21 +95,6 @@ public class ViewModel {
         this.status = status;
     }
 
-    public int getNumberOfCustomers() {
-        return numberOfCustomers;
-    }
-
-    public void setNumberOfCustomers(int numberOfCustomers) {
-        this.numberOfCustomers = numberOfCustomers;
-    }
-
-    public Map<DinnerwareType, Integer> getInitialRequisite() {
-        return initialRequisite;
-    }
-
-    public void setInitialRequisite(Map<DinnerwareType, Integer> initialRequisite) {
-        this.initialRequisite = initialRequisite;
-    }
 
     public org.zkoss.bind.Converter getConverter() {
         return converter;
@@ -130,6 +102,39 @@ public class ViewModel {
 
     public void setConverter(org.zkoss.bind.Converter converter) {
         this.converter = converter;
+    }
+
+
+    public Integer getSpoons() {
+        return spoons;
+    }
+
+    public void setSpoons(Integer spoons) {
+        this.spoons = spoons;
+    }
+
+    public Integer getForks() {
+        return forks;
+    }
+
+    public void setForks(Integer forks) {
+        this.forks = forks;
+    }
+
+    public Integer getKnifes() {
+        return knifes;
+    }
+
+    public void setKnifes(Integer knifes) {
+        this.knifes = knifes;
+    }
+
+    public Integer getNumberOfCustomers() {
+        return numberOfCustomers;
+    }
+
+    public void setNumberOfCustomers(Integer numberOfCustomers) {
+        this.numberOfCustomers = numberOfCustomers;
     }
 }
 

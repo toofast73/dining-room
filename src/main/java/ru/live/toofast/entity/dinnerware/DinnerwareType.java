@@ -6,6 +6,5 @@ package ru.live.toofast.entity.dinnerware;
 public enum DinnerwareType {
     FORK,
     SPOON,
-    KNIFE,
-    TRAY
+    KNIFE
 }

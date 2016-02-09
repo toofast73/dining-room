@@ -12,9 +12,7 @@ import java.util.function.BiConsumer;
 
 import static java.util.Objects.isNull;
 import static org.apache.log4j.LogManager.getLogger;
-import static ru.live.toofast.entity.Status.FAILURE;
-import static ru.live.toofast.entity.Status.NOT_PROCESSED;
-import static ru.live.toofast.entity.Status.SUCCESS;
+import static ru.live.toofast.entity.Status.*;
 
 /**
  * Created by toofast on 09/02/16.
@@ -49,7 +47,7 @@ public class DiningTaskCallback implements BiConsumer<Order, Throwable> {
 
     /**
      * We don't need to send notifications very often. One for #n customers is enough.
-     *
+     * <p>
      * TODO: substitute hardcoded variables with properties
      */
     private void notifyFrontend() {

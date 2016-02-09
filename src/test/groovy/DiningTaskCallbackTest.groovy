@@ -1,4 +1,3 @@
-import com.sun.org.apache.xpath.internal.operations.Or
 import org.zkoss.zk.ui.Desktop
 import org.zkoss.zk.ui.Execution
 import ru.live.toofast.ViewModel
@@ -9,17 +8,14 @@ import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicInteger
 
-import static ru.live.toofast.entity.Status.FAILURE
-import static ru.live.toofast.entity.Status.NOT_PROCESSED
-import static ru.live.toofast.entity.Status.SUCCESS
-
+import static ru.live.toofast.entity.Status.*
 
 /**
  * Created by toofast on 09/02/16.
  */
 class DiningTaskCallbackTest extends Specification {
 
-    def "Update status: no throwable"(){
+    def "Update status: no throwable"() {
 
         setup:
         ViewModel viewModel = new ViewModel()
@@ -43,7 +39,7 @@ class DiningTaskCallbackTest extends Specification {
     }
 
 
-    def "Update status: there was an exception"(){
+    def "Update status: there was an exception"() {
 
         setup:
         ViewModel viewModel = new ViewModel()
@@ -69,7 +65,7 @@ class DiningTaskCallbackTest extends Specification {
     }
 
 
-    def "Disables server push, when all tasks are finished"(){
+    def "Disables server push, when all tasks are finished"() {
         setup:
         ViewModel viewModel = new ViewModel()
         Map<Status, AtomicInteger> statusSample = [:]
@@ -88,7 +84,6 @@ class DiningTaskCallbackTest extends Specification {
 
         expect:
         callback.whenAllTasksCompleted()
-
 
 
     }

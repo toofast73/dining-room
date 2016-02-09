@@ -13,8 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by toofast on 08/02/16.
- *
+ * <p>
  * Converter for ViewModel.status
+ *
  * @see ViewModel
  */
 @org.springframework.stereotype.Component("statusMapConverter")

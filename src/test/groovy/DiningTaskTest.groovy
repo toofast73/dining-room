@@ -1,6 +1,3 @@
-import com.google.common.collect.Maps
-import com.google.common.collect.Queues
-import org.apache.commons.collections4.MapUtils
 import ru.live.toofast.entity.Meal
 import ru.live.toofast.entity.Order
 import ru.live.toofast.entity.dinnerware.Dinnerware
@@ -11,18 +8,17 @@ import ru.live.toofast.processing.DiningTask
 import spock.lang.Specification
 
 import static com.google.common.collect.Maps.newConcurrentMap
-import static com.google.common.collect.Queues.*
+import static com.google.common.collect.Queues.newConcurrentLinkedQueue
 import static org.apache.commons.collections4.MapUtils.isEmpty
-import static ru.live.toofast.entity.dinnerware.DinnerwareType.*
+import static ru.live.toofast.entity.dinnerware.DinnerwareType.FORK
 import static ru.live.toofast.entity.dinnerware.DinnerwareType.KNIFE
-
 
 /**
  * Created by toofast on 07/02/16.
  */
 class DiningTaskTest extends Specification {
 
-    def  "Check prerequisites: failed"(){
+    def "Check prerequisites: failed"() {
 
         setup:
 
@@ -42,7 +38,7 @@ class DiningTaskTest extends Specification {
     }
 
 
-    def "Check prerequisites: passed"(){
+    def "Check prerequisites: passed"() {
 
         setup:
 
@@ -60,7 +56,7 @@ class DiningTaskTest extends Specification {
     }
 
 
-    def "Return dinnerware test"(){
+    def "Return dinnerware test"() {
 
         setup:
         Map<DinnerwareType, Queue<Dinnerware>> requisite = newConcurrentMap()
@@ -87,8 +83,6 @@ class DiningTaskTest extends Specification {
 
         task.requisite.get(FORK).size() == 2
         task.requisite.get(KNIFE).size() == 1
-
-
 
 
     }

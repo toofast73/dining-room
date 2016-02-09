@@ -15,7 +15,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Queues.newConcurrentLinkedQueue;
 
 /**
- *
  * Created by toofast on 07/02/16.
  * The factory for DiningRoom class.
  *
@@ -81,11 +80,6 @@ public class DiningRoomFactory {
             case KNIFE:
                 for (int i = 0; i < quantity; i++) {
                     dw.add(new Knife());
-                }
-                break;
-            case TRAY:
-                for (int i = 0; i < quantity; i++) {
-                    dw.add(new Tray());
                 }
                 break;
         }

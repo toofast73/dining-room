@@ -8,9 +8,9 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by toofast on 07/02/16.
  */
-public class PersonTest extends Specification{
+public class PersonTest extends Specification {
 
-    def "Person has a favourite dish. Now it is generated randomly"(){
+    def "Person has a favourite dish. Now it is generated randomly"() {
 
         given:
         DiningRoomService service = new DiningRoomService();

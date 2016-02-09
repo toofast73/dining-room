@@ -1,41 +1,81 @@
 <zk>
-	<window title="Dining room simulator" border="normal" apply="org.zkoss.bind.BindComposer"
-			viewModel="@id('vm') @init('ru.live.toofast.ViewModel')">
-		<borderlayout height="800px">
-			<north>
-				<div style="background:blue"></div>
-			</north>
-			<south>
-				<div style="background:blue"></div>
-			</south>
-			<center>
-				<div>
-					<vbox>
-						<listbox height="160px" model="@bind(vm.status) @converter(vm.converter)">
-							<listhead>
-								<listheader label="Status" />
-								<listheader label="Quantity" />
-							</listhead>
-							<template name="model">
-								<listitem>
-									<listcell label="@bind(each.status)"></listcell>
-									<listcell label="@bind(each.quantity)"></listcell>
-								</listitem>
-							</template>
-						</listbox>
-					</vbox>
+    <style>
+        .water-mark {
+        color: gray; font-style: italic;
+        }
+        .form {
+        border: 1px solid #E1E1E1;
+        background: url('../widgets/effects/form_effect/img/bg.png');
+        padding: 20px 20px;
+        -webkit-border-radius:4px;
+        -moz-border-radius:4px;
+        border-radius:4px;
+        }
+        .form .name {
+        display: block;
+        width: 100px;
+        text-align: center;
+        }
+    </style>
+    <window title="Dining room simulator" border="normal" apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('ru.live.toofast.ViewModel')">
+        <borderlayout height="800px">
+            <north>
+                <div style="background:blue"></div>
+            </north>
+            <south>
+                <div style="background:blue"></div>
+            </south>
+            <center>
+                <div>
+                    <vbox>
+                        <listbox height="160px" model="@bind(vm.status) @converter(vm.converter)">
+                            <listhead>
+                                <listheader label="Status"/>
+                                <listheader label="Quantity"/>
+                            </listhead>
+                            <template name="model">
+                                <listitem>
+                                    <listcell label="@bind(each.status)"></listcell>
+                                    <listcell label="@bind(each.quantity)"></listcell>
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </vbox>
 
-				</div>
-			</center>
-			<west>
-				<div width="200px">
-					<vbox align="center">
-						<button id="happy" label="Test Happy Case" onClick="@command('invokeHappyCase')" autodisable="happy, difficult" />
-						<button id="difficult" label="Test Difficult Case" onClick="@command('invokeCaseWithDifficulties')" autodisable="happy, difficult" />
-					</vbox>
+                </div>
+            </center>
+            <west>
+                <div width="500px" class="form">
+                    <vlayout spacing="7px">
+                        <label value="Simulation settings" style="font-size:16px;font-weight:bold;color:gray;" />
+                        <hlayout spacing="20px" >
+                            <label class="name" value="Customers :" />
+                            <textbox id="forks"  value="@bind(vm.numberOfCustomers)" width='150px' />
+                        </hlayout>
+                        <hlayout spacing="20px">
+                            <label class="name" value="Forks :" />
+                            <textbox id="phone" value="@bind(vm.forks)" width='150px' />
+                        </hlayout>
+                        <hlayout spacing="20px">
+                            <label class="name" value="Knifes :" />
+                            <textbox id="date" value="@bind(vm.knifes)" width='150px' />
+                        </hlayout>
+                        <hlayout spacing="20px">
+                            <label class="name" value="Spoons:" />
+                            <textbox id="country" value="@bind(vm.spoons)" width='150px' />
+                        </hlayout>
+                        <button id="run" label="Run simulation" onClick="@command('simulate')"
+                                autodisable="run"/>
+                    </vlayout>
+                </div>
 
-				</div>
-			</west>
-		</borderlayout>
-	</window>
+
+
+
+
+
+            </west>
+        </borderlayout>
+    </window>
 </zk>

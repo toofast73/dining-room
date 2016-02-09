@@ -28,7 +28,7 @@ import static ru.live.toofast.entity.Meal.PASTA
 class RetryTest {
 
     @Test
-    void testRetry(){
+    void testRetry() {
 
         Order order = new Order();
         order.setDish(PASTA)
@@ -69,7 +69,6 @@ class RetryTest {
 
 
     }
-
 
 
 }

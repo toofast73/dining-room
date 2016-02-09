@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.stream.Collectors.toList;
@@ -20,9 +19,8 @@ import static ru.live.toofast.entity.Status.NOT_PROCESSED;
 
 /**
  * Created by toofast on 06/02/16.
- *
+ * <p>
  * The stateful service. Emulates the room, where people take food.
- *
  */
 public class DiningRoom {
 
