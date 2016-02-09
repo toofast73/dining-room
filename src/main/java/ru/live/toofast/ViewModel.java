@@ -6,6 +6,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
+import org.zkoss.zk.ui.util.Clients;
 import ru.live.toofast.entity.Order;
 import ru.live.toofast.entity.Status;
 import ru.live.toofast.entity.dinnerware.DinnerwareType;
@@ -20,6 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.google.common.collect.Maps.newConcurrentMap;
 import static com.google.common.collect.Maps.newHashMap;
+import static java.util.Objects.isNull;
 
 /**
  * Created by toofast on 07/02/16.
@@ -66,8 +68,29 @@ public class ViewModel {
         req.put(DinnerwareType.SPOON, spoons);
         req.put(DinnerwareType.KNIFE, knifes);
         Integer numberOfCustomers = getNumberOfCustomers();
-        prepareProcessingStatus(numberOfCustomers);
-        runCommand(numberOfCustomers, req);
+
+        if (isValid(req, numberOfCustomers)) {
+            prepareProcessingStatus(numberOfCustomers);
+            runCommand(numberOfCustomers, req);
+        }
+    }
+
+    private boolean isValid(Map<DinnerwareType, Integer> req, Integer numberOfCustomers) {
+        boolean isValid = true;
+        for (Map.Entry<DinnerwareType, Integer> e : req.entrySet()) {
+            if (isNull(e.getValue()) || e.getValue() < 0) {
+                Clients.alert(String.format("Validation failed: field %s is not valid", e.getKey()));
+                isValid = false;
+            }
+
+        }
+        if (isNull(numberOfCustomers) || numberOfCustomers < 0) {
+            Clients.alert("Validation failed: number of customers is not valid");
+            isValid = false;
+
+        }
+
+        return isValid;
     }
 
     private void prepareProcessingStatus(Integer numberOfCustomers) {

@@ -47,7 +47,7 @@
             </center>
             <west>
                 <div width="500px" class="form">
-                    <vlayout spacing="7px">
+                    <vlayout spacing="7px" >
                         <label value="Simulation settings" style="font-size:16px;font-weight:bold;color:gray;" />
                         <hlayout spacing="20px" >
                             <label class="name" value="Customers :" />
@@ -59,7 +59,7 @@
                         </hlayout>
                         <hlayout spacing="20px">
                             <label class="name" value="Knifes :" />
-                            <textbox id="date" value="@bind(vm.knifes)" constraint="no empty, /[0-9]*/ : Mandatory field!"  width='150px' />
+                            <textbox id="date" value="@bind(vm.knifes)"  constraint="no empty, /[0-9]*/ : Mandatory field!"  width='150px' />
                         </hlayout>
                         <hlayout spacing="20px">
                             <label class="name" value="Spoons:" />

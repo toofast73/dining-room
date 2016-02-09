@@ -66,24 +66,25 @@ public class DiningRoomFactory {
     private Queue<Dinnerware> generateDinnerware(Integer quantity, DinnerwareType type) {
         Queue<Dinnerware> dw = newConcurrentLinkedQueue();
 
-        switch (type) {
-            case FORK:
-                for (int i = 0; i < quantity; i++) {
-                    dw.add(new Fork());
-                }
-                break;
-            case SPOON:
-                for (int i = 0; i < quantity; i++) {
-                    dw.add(new Spoon());
-                }
-                break;
-            case KNIFE:
-                for (int i = 0; i < quantity; i++) {
-                    dw.add(new Knife());
-                }
-                break;
-        }
-        return dw;
+            switch (type) {
+                case FORK:
+                    for (int i = 0; i < quantity; i++) {
+                        dw.add(new Fork());
+                    }
+                    break;
+                case SPOON:
+                    for (int i = 0; i < quantity; i++) {
+                        dw.add(new Spoon());
+                    }
+                    break;
+                case KNIFE:
+                    for (int i = 0; i < quantity; i++) {
+                        dw.add(new Knife());
+                    }
+                    break;
+            }
+            return dw;
+
     }
 
     private List<Person> generateCustomers(int numberOfCustomers) {
