@@ -44,8 +44,6 @@ public class ViewModel {
 
     private Map<Status, AtomicInteger> status;
 
-    private String keyword = "FOO";
-
     @WireVariable("statusMapConverter")
     private org.zkoss.bind.Converter converter;
 
@@ -99,15 +97,6 @@ public class ViewModel {
         status.put(Status.FAILURE, new AtomicInteger(0));
         status.put(Status.NOT_PROCESSED, new AtomicInteger(numberOfCustomers));
         setStatus(status);
-    }
-
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
     }
 
     public Map<Status, AtomicInteger> getStatus() {
